@@ -1,8 +1,7 @@
 import { one } from "./one.ts";
 import { two } from "./two.ts";
 import { units } from "./units.ts";
-
-const data = '';
+import { data } from "./data.ts";
 
 const executor = (): void => {
     const areUnitsAreOk = units(one, two);
