@@ -6,29 +6,24 @@ export const two = (data: string): number => {
     let numberOfZeros = 0;
     for(let i  = 0; i < preparedData.length; i ++) {
         const rotation = preparedData[i];
+        const prevPosition = currentPosition;
+
+        currentPosition += rotation.direction === 'LEFT' ? -rotation.steps : rotation.steps;
+        const numberOf100Inside = Math.floor(Math.abs(currentPosition / 100));
         if(rotation.direction === 'LEFT') {
-            if(currentPosition === 0) {
+            if(prevPosition === 0) {
                 numberOfZeros --;
             }
-            currentPosition -= rotation.steps;
-            const numberOf100Inside = Math.floor(Math.abs(currentPosition / 100));
             if(currentPosition < 0) {
                 currentPosition += ((numberOf100Inside + 1) * 100);
                 numberOfZeros += (numberOf100Inside + 1);
             }
-            if(currentPosition === 0 && numberOf100Inside === 0) {
-                numberOfZeros ++;
-            }
-        } else {
-            currentPosition += rotation.steps;
-            const numberOf100Inside = Math.abs(Math.floor(currentPosition / 100));
-            if(currentPosition >= 100) {
-                currentPosition -= (numberOf100Inside * 100);
-            }
+        } else if(currentPosition >= 100) {
+            currentPosition -= (numberOf100Inside * 100);
             numberOfZeros += numberOf100Inside;
-            if(currentPosition === 0 && numberOf100Inside === 0) {
-                numberOfZeros ++;
-            }
+        }
+        if(currentPosition === 0 && numberOf100Inside === 0) {
+            numberOfZeros ++;
         }
         currentPosition %= 100;
     }
