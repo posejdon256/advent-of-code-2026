@@ -1,4 +1,4 @@
-import { dataOne, exampleData } from "./data.ts";
+import { dataOne } from "./data.ts";
 import { one } from "./one.ts";
 import { two } from "./two.ts";
 import { units } from "./units.ts";

@@ -1,4 +1,4 @@
-import { addNewPath, bfs, dinstance, getClosestPaths } from "./helpers.ts";
+import { bfs, dinstance } from "./helpers.ts";
 import { splitData } from "./splitter.ts";
 import type { Distance } from "./types.ts";
 

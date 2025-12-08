@@ -1,6 +1,6 @@
-import { dinstance, getClosestPaths, bfs } from "./helpers.ts";
+import { bfs, dinstance } from "./helpers.ts";
 import { splitData } from "./splitter.ts";
-import type { Distance, Point } from "./types.ts";
+import type { Distance } from "./types.ts";
 
 export const one = (data: string): number => {
     const points = splitData(data);
