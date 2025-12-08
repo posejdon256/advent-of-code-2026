@@ -1,6 +1,6 @@
 import { addNewPath, bfs, dinstance, getClosestPaths } from "./helpers.ts";
 import { splitData } from "./splitter.ts";
-import type { Distance, Point3D } from "./types.ts";
+import type { Distance } from "./types.ts";
 
 export const two = (data: string): number => {
  const points = splitData(data);
@@ -32,17 +32,4 @@ export const two = (data: string): number => {
             return p1.x * p2.x
         }
     }
-}
-
-
-const getFarestDistance = (distances: Array<Array<number>>, points: Array<Point3D>): Distance => {
-    let max = null as Distance | null;
-    for(let j = 0; j < distances.length; j ++)  {
-        for(let k = j + 1; k < distances[j].length; k ++) {
-            if(max === null || max!.distance < distances[j][k]) {
-                max = {p1: points[j], p2: points[k], distance: distances[j][k], indexX: k, indexY: j};
-            }
-        }
-    }
-    return max!;
 }
