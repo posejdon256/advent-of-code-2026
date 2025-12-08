@@ -1,21 +1,19 @@
 import { dinstance, getClosestPaths, bfs } from "./helpers.ts";
 import { splitData } from "./splitter.ts";
-import type { Point } from "./types.ts";
+import type { Distance, Point } from "./types.ts";
 
 export const one = (data: string): number => {
     const points = splitData(data);
-    const distances = new Array<Array<number>>(points.length);
+    const distances = Array<Distance>();
     for(let i = 0; i <points.length; i ++) {
-        distances[i] = new Array<number>(points.length);
         for(let j = i + 1; j < points.length; j ++) {
-            distances[i][j] = dinstance(points[i], points[j]);
+            distances.push({p1: points[i], p2: points[j], distance: dinstance(points[i], points[j])} as Distance);
         }
     }
-    const sortedDistances = getClosestPaths(distances, points);
-
+    distances.sort((a, b) => a.distance - b.distance).splice(1000, distances.length);
     const graph = new Map<number, Array<number>>();
     const visited = new Map<number, boolean>();
-    sortedDistances.forEach(edge => {
+    distances.forEach(edge => {
         const {p1, p2} = edge;
 
         if(!graph.get(p1.id)) {
@@ -28,7 +26,7 @@ export const one = (data: string): number => {
         graph.get(p2.id)!.push(p1.id);
     });
     const sizes: Array<number> = [];
-    sortedDistances.forEach(edge => {
+    distances.forEach(edge => {
         const depth = bfs(graph, edge.p1.id, visited);
         if(depth) {
             sizes.push(depth);

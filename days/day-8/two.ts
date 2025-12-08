@@ -3,19 +3,19 @@ import { splitData } from "./splitter.ts";
 import type { Distance } from "./types.ts";
 
 export const two = (data: string): number => {
- const points = splitData(data);
-    const distances = new Array<Array<number>>(points.length);
+    const points = splitData(data);
+    const distances = Array<Distance>();
     for(let i = 0; i <points.length; i ++) {
-        distances[i] = new Array<number>(points.length);
         for(let j = i + 1; j < points.length; j ++) {
-            distances[i][j] = dinstance(points[i], points[j]);
+            distances.push({p1: points[i], p2: points[j], distance: dinstance(points[i], points[j])} as Distance);
         }
     }
+    distances.sort((a, b) => a.distance - b.distance);
     const graph = new Map<number, Array<number>>();
-    const sortedDistances = new Array<Distance>();
+    let iterator = 0;
     while(true) {
         const visited = new Map<number, boolean>();
-        const edge = addNewPath(sortedDistances, distances, points)
+        const edge = distances[iterator]
 
          const {p1, p2} = edge;
 
@@ -31,5 +31,6 @@ export const two = (data: string): number => {
         if(depth === points.length) {
             return p1.x * p2.x
         }
+        iterator ++;
     }
 }
